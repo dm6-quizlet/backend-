@@ -8,94 +8,112 @@ const express = require('express')
 //POST A NEW STUDY SET (WITH THE MODEL IN THE REQUEST IN THE BODY)
 router.post('/create', (req, res, next) => {
 	let newStudySet = new StudySet({
-		id: req.body.id,
 		title: req.body.title,
 		cards: req.body.cards,
 		userId: req.body.userId,
 		password: req.body.password,
-		visability: req.body.visability,
-		privilages: req.body.privilages,
-		updated: req.body.updated
+		description: req.body.description
 	});
 
-	StudySet.addStudySet(newStudySet, (err, studyset) => {
-		if(err){
+	StudySet.addStudySet(newStudySet)
+		.then(response => {
+			res.json({success: true, msg:'created', studyset: response})
+		})
+		.catch(err => {
 			res.json({success: false, msg:'Failed to create'})
-		} else {
-			res.json({success: true, msg:'created'})
-		}
-	})
+		})
 });
 
 //good
 //GET A STUDY SET BY IT'S NAME (IN THE REQUEST BODY)
 router.post('/studyset', (req, res, next) => {
 	const title = req.body.title;
-	StudySet.getStudySetByTitle(title, (err, studyset) => {
-		if(err) throw err;
-		if(!studyset){
-			return res.json({success: false, msg: 'Study set not found'})
-		} else {
-			res.json({success: true, studyset: studyset})
-		}
-	})
+	StudySet.getStudySetByTitle(title)
+		.then(studyset => {
+			if(!studyset){
+				return res.json({success: false, msg: 'Study set not found'})
+			} else {
+				res.json({success: true, studyset: studyset})
+			}
+		})
+		.catch(err => {
+			next(err)
+		})
 })
-
 
 //good
 router.get('/:userId', (req, res, next) => {
 	const userId = req.params.userId;
-	StudySet.getStudySetByOwner(userId, (err, studysets) => {
-		if(err) throw err;
-		if(!studysets){
-			return res.json({success: false, msg: 'Study set not found'})
-		} else {
-			res.json({success: true, studysets: studysets})
-		}
+	StudySet.getStudySetByOwner(userId)
+		.then(studyset => {
+			if(!studyset){
+				return res.json({success: false, msg: 'Study set not found'})
+			} else {
+				res.json({success: true, studyset: studyset})
+			}
+		})
+		.catch(err => {
+			next(err)
+		})
+})
 
+router.get('/', (req, res, next) => {
+	StudySet.getAllStudySets()
+	.then(response => {
+		res.status(200).json(response)
+	})
+	.catch(err => {
+		res.status(500).json(err)
 	})
 })
+
 
 //good
 router.delete('/:studySetId/delete', (req, res, next) => {
 	const studySetId = req.params.studySetId;
-	StudySet.deleteStudySet(studySetId, (err, studysets) => {
-		if(err) throw err;
-		if(!studysets){
-			return res.json({success: false, msg: 'Study set not found'})
-		} else {
-			res.json({success: true, msg: 'Study set deleted'})
-		}
-
-	})
+	StudySet.deleteStudySet(studySetId)
+		.then(studyset => {
+			if(!studyset){
+				return res.json({success: false, msg: 'Study set not found'})
+			} else {
+				res.json({success: true, msg: 'Study set deleted'})
+			}
+		})
+		.catch(err => {
+			next(err)
+		})
 })
 
 router.put('/:studySetId/newtitle', (req, res, next) => {
 	const studySetId = req.params.studySetId;
 	const newTitle = req.body.title
-	StudySet.updateStudySetTitle(studySetId, newTitle,(err, studysets) => {
-		if(err) throw err;
-		if(!studysets){
-			return res.json({success: false, msg: 'Study set not found'})
-		} else {
-			res.json({success: true, msg: 'Study set updated'})
-		}
-
-	})
+	StudySet.updateStudySetTitle(studySetId, newTitle)
+		.then(studyset => {
+			if(!studyset){
+				return res.json({success: false, msg: 'Study set not found'})
+			} else {
+				res.json({success: true, msg: 'Study set updated'})
+			}
+		})
+		.catch(err => {
+			next(err)
+		})
 })
 
 router.put('/update', (req, res, next) => {
 	const studySetId = req.body.id
 	const update = req.body
-	StudySet.updateStudySet(studySetId, update,(err, studysets) => {
-		if(err) throw err;
-		if(!studysets){
-			return res.json({success: false, msg: 'Study set not found'})
-		} else {
-			res.json({success: true, msg: 'Study set updated'})
-		}
-
-	})
+	StudySet.updateStudySet(studySetId, update)
+		.then(studyset => {
+			if(!studyset){
+				return res.json({success: false, msg: 'Study set not found'})
+			} else {
+				res.json({success: true, msg: 'Study set updated'})
+			}
+		})
+		.catch(err => {
+			next(err)
+		})
 })
 
 

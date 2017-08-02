@@ -10,28 +10,20 @@ const CardSchema = mongoose.Schema({
 			type: String,
 			required: true
 		},
-		imageURL: {
+		image_url: {
 			type: String
-		},
-		id: {
-			type: String,
-			required: true
 		}
 })
 
 // User Schema
 const StudySetSchema = mongoose.Schema({
-	id: {
-		type: String,
-		required: true
-	},
 	title: {
 		type: String,
 		required: true
 	},
 	cards: [CardSchema],
-	userId: { 
-		type: String,
+	userId: {
+		type: mongoose.Schema.Types.ObjectId, ref: 'User',
 		required: true
 	},
 	password: {
@@ -41,11 +33,23 @@ const StudySetSchema = mongoose.Schema({
 		type: String,
 		default: 'Everyone'
 	},
-	privelages: {
+	privileges: {
 		type: String,
 		default: 'Just me'
 	},
-	updated: { type: Date, default: Date.now }
+	updated: { type: Date, default: Date.now },
+	created: { type: Date, default: Date.now },
+	description: {
+		type: String,
+		required: true
+	},
+	subject: {
+		type: String
+	},
+	image_url: {
+		type: String,
+		default: "https://farm4.staticflickr.com/3019/2580344111_c467711ec3.jpg"
+	}
 });
 
 
@@ -53,52 +57,50 @@ const StudySet = module.exports = mongoose.model('StudySet', StudySetSchema);
 
 
 // deprecated code from old project
-// module.exports.getCharacterById = function(id, callback){
-// 	User.findById(id, callback);
+// module.exports.getCharacterById = function(id){
+// 	User.findById(id);
 // }
 
-// module.exports.getCharacterByCharacterName = function(name, callback){
+// module.exports.getCharacterByCharacterName = function(name){
 // 	const query = {name: name}
-// 	User.findOne(query, callback);
+// 	User.findOne(query);
 // }
 
 module.exports.getAllStudySets = function (req, res, next) {
-		StudySet.find()
+		return StudySet.find()
+		.populate('userId');
 	}
 
-module.exports.getStudySetByTitle = function(title, callback){
+module.exports.getStudySetByTitle = function(title){
 	const query = {title: title}
-	StudySet.findOne(query, callback);
+	return StudySet.findOne(query)
+	.populate('userId');
 }
 
-module.exports.getStudySetById = function(studySetId, callback){
-	const query = {studySetId: studySetId}
-	StudySet.findOne(query, callback);
+module.exports.getStudySetById = function(studySetId){
+	return StudySet.findById(studySetId)
+	.populate('userId');
 }
 
-module.exports.getStudySetByOwner = function(userId, callback){
+module.exports.getStudySetByOwner = function(userId){
 	const query = {userId: userId}
-	StudySet.find(query, callback);
+	return StudySet.find(query)
+	.populate('userId');
 }
-module.exports.addStudySet = function(newStudySet, callback){
-			newStudySet.save(callback);
-}
-
-module.exports.deleteStudySet = function(studySetId, callback){
-	const query = {id: studySetId}
-	StudySet.deleteOne(query, callback)
+module.exports.addStudySet = function(newStudySet){
+	return newStudySet.save();
 }
 
-module.exports.updateStudySetTitle = function(studySetId, title, callback){
-	const query = {studySetId: studySetId}
+module.exports.deleteStudySet = function(studySetId){
+	return StudySet.findByIdAndRemove(studySetId)
+}
+
+module.exports.updateStudySetTitle = function(studySetId, title){
 	const newTitle = {$set: {title: title}}
-	StudySet.updateOne(query, newTitle, callback)
+	return StudySet.findByIdAndUpdate(studySetId, newTitle, {new: true})
 }
 
-module.exports.updateStudySet = function(studySetId, obj, callback){
-	const filter = {id: studySetId}
+module.exports.updateStudySet = function(studySetId, obj){
 	const update = {$set: obj}
-	StudySet.updateMany(filter, update, callback)
+	return StudySet.findByIdAndUpdate(studySetId, update, {new: true})
 }
-
-

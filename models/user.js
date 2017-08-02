@@ -6,27 +6,41 @@ const mongoose = require('mongoose')
 const UserSchema = mongoose.Schema({
 	username: {
 		type: String,
-		required: true
 	},
 	email: {
-		type: String,
-		required: true
+		type: String
 	},
 	password: {
+		type: String
+	},
+	first_name: {
 		type: String,
-		required: true
+	},
+	last_name: {
+		type: String,
+	},
+	account_type: {
+		type: String,
+		default: 'student',
+		enum: ['student', 'teacher', 'alien']
+	},
+	facebook_id: {
+		type: String
+	},
+	google_id: {
+		type: String
 	}
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.getUserById = function(id, callback){
-	User.findById(id, callback);
+module.exports.getUserById = function(id){
+	return User.findById(id);
 }
 
-module.exports.getUserByUsername = function(username, callback){
+module.exports.getUserByUsername = function(username){
 	const query = {username: username}
-	User.findOne(query, callback);
+	return User.findOne(query);
 }
 
 module.exports.addUser = function(newUser, callback){
@@ -45,5 +59,3 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
 		callback(null, isMatch);
 	});
 }
-
-
