@@ -12,7 +12,8 @@ router.post('/create', (req, res, next) => {
 		cards: req.body.cards,
 		userId: req.body.userId,
 		password: req.body.password,
-		description: req.body.description
+		description: req.body.description,
+		image_url: req.body.image_url
 	});
 
 	StudySet.addStudySet(newStudySet)
