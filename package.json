@@ -6,13 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-   "dependencies": {
-    "express": "*",
-    "mongoose": "*",
+  "dependencies": {
     "bcryptjs": "*",
-    "cors": "*",
-    "jsonwebtoken": "*",
+    "bluebird": "^3.5.0",
     "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "express-session": "^1.15.4",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
     "passport": "*",
     "passport-jwt": "*"
   },

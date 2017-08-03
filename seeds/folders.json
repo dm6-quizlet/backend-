@@ -1,0 +1,4 @@
+{"_id":{"$oid":"59823b4783930227cef805d2"},"title":"Yay!","userId":{"$oid":"59823071569be223a7bcacc1"},"studysets":[],"__v":0}
+{"_id":{"$oid":"598331b5c40df903a61ac456"},"title":"Math","userId":{"$oid":"59822b833de7ed21593b9272"},"studysets":[{"$oid":"598336de25f66305a0e7d1c7"},{"$oid":"598337ee25f66305a0e7d1cb"}],"__v":0}
+{"_id":{"$oid":"598331e9c40df903a61ac457"},"title":"English","userId":{"$oid":"59822b833de7ed21593b9272"},"studysets":[{"$oid":"59833a1a25f66305a0e7d1d3"},{"$oid":"5983392825f66305a0e7d1cf"}],"__v":0}
+{"_id":{"$oid":"59833201c40df903a61ac458"},"title":"Geography","userId":{"$oid":"59822b833de7ed21593b9272"},"studysets":[{"$oid":"598333f2c40df903a61ac459"},{"$oid":"598334d9c40df903a61ac45d"}],"__v":0}
