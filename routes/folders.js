@@ -5,15 +5,8 @@ const jwt = require('jsonwebtoken')
 const config = require('../config/database')
 const Folder = require('../models/Folder');
 
-function isAuthorized(req, res, next) {
-  if (!req.session || !req.session.user) {
-    return next("Unauthorized")
-  }
-  return next()
-}
-
-router.get('/', isAuthorized, (req, res, next) => {
-  Folder.getFolderByUserId(req.session.user._id)
+router.get('/:userId', (req, res, next) => {
+  Folder.getFolderByUserId(req.params.userId)
   .then(folders => {
     if (!folders) {
       return res.status(200).json([])
@@ -22,8 +15,8 @@ router.get('/', isAuthorized, (req, res, next) => {
   })
 })
 
-router.post('/', isAuthorized, (req, res, next) =>{
-  req.body.userId = req.session.user._id
+router.post('/:userId', (req, res, next) =>{
+  req.body.userId = req.params.userId
   const newFolder = new Folder(req.body)
   newFolder.save()
   .then(response => {
@@ -31,8 +24,8 @@ router.post('/', isAuthorized, (req, res, next) =>{
   })
 })
 
-router.put('/:folderId/:setId', isAuthorized ,(req, res, next) =>{
-  Folder.findByIdAndUpdate(req.params.folderId, {$addToSet: {studysets: req.params.setId}}, {new: true})
+router.put('/:userId/:folderId/:setId' ,(req, res, next) =>{
+  Folder.findOneAndUpdate({_id: req.params.folderId, userId: req.params.userId}, {$addToSet: {studysets: req.params.setId}}, {new: true})
   .then(response => {
     res.send(response)
   })

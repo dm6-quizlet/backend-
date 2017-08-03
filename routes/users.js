@@ -40,7 +40,6 @@ router.post('/authenticate', (req, res, next) => {
 					const token = jwt.sign(user, config.secret, {
 						expiresIn: 604800 // 1 week
 					});
-					req.session.user = user
 					res.json({
 						success: true,
 						token: 'JWT '+token,
@@ -48,7 +47,8 @@ router.post('/authenticate', (req, res, next) => {
 							id: user._id,
 							name: user.name,
 							username: user.username,
-							email: user.email
+							email: user.email,
+							image_url: user.image_url
 						}
 					});
 				} else {

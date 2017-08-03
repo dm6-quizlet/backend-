@@ -20,7 +20,6 @@ const Folder = module.exports = mongoose.model('Folder', FolderSchema)
 
 module.exports.getFolderByUserId = function(userId){
 	const query = {userId: userId}
-	return Folder.findOne(query)
+	return Folder.find(query)
   .populate('userId')
-  .populate({path: 'studysets', populate: {path: 'userId'}});
 }

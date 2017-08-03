@@ -1,3 +1,3 @@
-{"_id":{"$oid":"59822b833de7ed21593b9272"},"username":"dadleatherwood","email":"hey","password":"$2a$10$828p/pJqezsLJVvJrLrteuZNTlafuRQLZGXlTIzw3CCtdwcQggkLC","account_type":"student","__v":0}
-{"_id":{"$oid":"59822b9c3de7ed21593b9273"},"username":"brian","email":"brian@brian","password":"$2a$10$ZOeMNBzxorD7JiUR1PgGi./9YqTFhoA2/NDAsXYz5A8V.t0djt4NK","account_type":"student","__v":0}
-{"_id":{"$oid":"59823071569be223a7bcacc1"},"username":"postman","email":"stuff","password":"$2a$10$fenqzWp9LRgTsRyYxTocQuMLST9xlhwE49Q3LZQq79YOGW0QhMFzC","account_type":"student","__v":0}
+{"_id":{"$oid":"59822b833de7ed21593b9272"},"username":"dadleatherwood","email":"hey","password":"$2a$10$828p/pJqezsLJVvJrLrteuZNTlafuRQLZGXlTIzw3CCtdwcQggkLC","account_type":"student","__v":0,"image_url":"https://quizlet.com/a/i/animals/14.B9By.jpg"}
+{"_id":{"$oid":"59822b9c3de7ed21593b9273"},"username":"brian","email":"brian@brian","password":"$2a$10$ZOeMNBzxorD7JiUR1PgGi./9YqTFhoA2/NDAsXYz5A8V.t0djt4NK","account_type":"student","__v":0,"image_url":"https://quizlet.com/a/i/animals/14.B9By.jpg"}
+{"_id":{"$oid":"59823071569be223a7bcacc1"},"username":"postman","email":"stuff","password":"$2a$10$fenqzWp9LRgTsRyYxTocQuMLST9xlhwE49Q3LZQq79YOGW0QhMFzC","account_type":"student","__v":0,"image_url":"https://quizlet.com/a/i/animals/14.B9By.jpg"}

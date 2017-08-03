@@ -28,7 +28,6 @@ app.use(cors());
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use(session({secret: "Jacob", saveUninitialized: false, resave: false}))
 //body parser middleware
 app.use(bodyParser.json());
 

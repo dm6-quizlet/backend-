@@ -24,6 +24,10 @@ const UserSchema = mongoose.Schema({
 		default: 'student',
 		enum: ['student', 'teacher', 'alien']
 	},
+	image_url: {
+		type: String,
+		default: "https://quizlet.com/a/i/animals/14.B9By.jpg"
+	},
 	facebook_id: {
 		type: String
 	},
