@@ -50,6 +50,21 @@ router.get('/:userId', (req, res, next) => {
 			if(!studyset){
 				return res.json({success: false, msg: 'Study set not found'})
 			} else {
+
+				res.json({success: true, studyset: studyset})
+			}
+		})
+		.catch(err => {
+			next(err)
+		})
+})
+
+router.get('/:userId/:searchTerm', (req, res, next) => {
+	StudySet.find({userId: req.params.userId, $text: {$search : req.params.searchTerm}})
+	  .then(studyset => {
+			if(!studyset){
+				return res.json({success: false, msg: 'Study set not found'})
+			} else {
 				res.json({success: true, studyset: studyset})
 			}
 		})
