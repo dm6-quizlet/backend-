@@ -17,8 +17,23 @@ router.post('/register', (req, res, next) => {
 		if (err) {
 			res.json({success: false, msg:'Failed to register user'})
 		} else {
-			req.session.user = user
-			res.json({success: true, msg:'User registered', user: user})
+			const token = jwt.sign(user, config.secret, {
+				expiresIn: 604800 // 1 week
+			});
+			res.json({
+				success: true,
+				token: 'JWT '+token,
+				user: {
+					id: user._id,
+					name: user.name,
+					username: user.username,
+					email: user.email,
+					image_url: user.image_url,
+					first_name: user.first_name,
+					last_name: user.last_name,
+					account_type: user.account_type
+				}
+			});
 		}
 	})
 });
@@ -48,7 +63,10 @@ router.post('/authenticate', (req, res, next) => {
 							name: user.name,
 							username: user.username,
 							email: user.email,
-							image_url: user.image_url
+							image_url: user.image_url,
+							first_name: user.first_name,
+							last_name: user.last_name,
+							account_type: user.account_type
 						}
 					});
 				} else {

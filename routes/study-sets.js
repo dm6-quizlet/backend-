@@ -43,6 +43,16 @@ router.post('/studyset', (req, res, next) => {
 })
 
 //good
+router.get('/', (req, res, next) => {
+	StudySet.getAllStudySets()
+	.then(response => {
+		res.status(200).json(response)
+	})
+	.catch(err => {
+		res.status(500).json(err)
+	})
+})
+
 router.get('/:userId', (req, res, next) => {
 	const userId = req.params.userId;
 	StudySet.getStudySetByOwner(userId)
@@ -59,6 +69,21 @@ router.get('/:userId', (req, res, next) => {
 		})
 })
 
+
+router.get('/all/:searchTerm', (req, res, next) => {
+	StudySet.find({$text: {$search : req.params.searchTerm}})
+	.then(studyset => {
+		if(!studyset) {
+			return res.json({success: false, msg: 'Study set not found'})
+		} else {
+			res.json({success: true, studyset: studyset})
+		}
+	})
+	.catch(err => {
+		next(err)
+	})
+})
+
 router.get('/:userId/:searchTerm', (req, res, next) => {
 	StudySet.find({userId: req.params.userId, $text: {$search : req.params.searchTerm}})
 	  .then(studyset => {
@@ -73,15 +98,8 @@ router.get('/:userId/:searchTerm', (req, res, next) => {
 		})
 })
 
-router.get('/', (req, res, next) => {
-	StudySet.getAllStudySets()
-	.then(response => {
-		res.status(200).json(response)
-	})
-	.catch(err => {
-		res.status(500).json(err)
-	})
-})
+
+
 
 
 //good
