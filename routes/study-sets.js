@@ -57,10 +57,9 @@ router.post('/studyset', (req, res, next) => {
 		})
 })
 
-//good
-router.delete('/:studySetId/delete', (req, res, next) => {
-	const studySetId = req.params.studySetId;
-	StudySet.deleteStudySet(studySetId)
+router.get('/:userId', (req, res, next) => {
+	const userId = req.params.userId;
+	StudySet.getStudySetByOwner(userId)
 		.then(studyset => {
 			if (!studyset) {
 				return res.json({
@@ -68,10 +67,7 @@ router.delete('/:studySetId/delete', (req, res, next) => {
 					msg: 'Study set not found'
 				})
 			} else {
-				res.json({
-					success: true,
-					msg: 'Study set deleted'
-				})
+				res.json({success: true, studyset: studyset})
 			}
 		})
 		.catch(err => {
@@ -106,23 +102,64 @@ router.put('/update', (req, res, next) => {
 	const studySetId = req.body.id
 	const update = req.body
 	StudySet.updateStudySet(studySetId, update)
-		.then(studyset => {
-			if (!studyset) {
-				return res.json({
-					success: false,
-					msg: 'Study set not found'
-				})
+
+router.get('/all/:searchTerm', (req, res, next) => {
+	StudySet.find({$text: {$search : req.params.searchTerm}})
+	.then(studyset => {
+		if(!studyset) {
+			return res.json({success: false, msg: 'Study set not found'})
+		} else {
+			res.json({success: true, studyset: studyset})
+		}
+	})
+	.catch(err => {
+		next(err)
+	})
+})
+
+router.get('/:userId/:searchTerm', (req, res, next) => {
+	StudySet.find({userId: req.params.userId, $text: {$search : req.params.searchTerm}})
+	  .then(studyset => {
+			if(!studyset){
+				return res.json({success: false, msg: 'Study set not found'})
 			} else {
-				res.json({
-					success: true,
-					msg: 'Study set updated'
-				})
+				res.json({success: true, studyset: studyset})
 			}
 		})
 		.catch(err => {
 			next(err)
 		})
 })
+
+
+
+
+
+
+router.delete('/:studySetId/delete', (req, res, next) => {
+	const studySetId = req.params.studySetId;
+	StudySet.deleteStudySet(studySetId)
+	.then(result => {
+		res.json({
+			success: true,
+			msg: 'Study set deleted'
+		})
+	})
+	.catch(err => {
+		res.status(500).json(err)
+	})
+})
+
+router.get('/', (req, res, next) => {
+	StudySet.getAllStudySets()
+	.then(response => {
+		res.status(200).json(response)
+	})
+	.catch(err => {
+		res.status(500).json(err)
+	})
+})
+
 
 router.put('/newtitle/:studySetId', (req, res, next) => {
 	const studySetId = req.params.studySetId;
