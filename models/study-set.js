@@ -12,11 +12,20 @@ const CardSchema = mongoose.Schema({
 		},
 		image_url: {
 			type: String
+		},
+		id: {
+			type: String
 		}
+
+
 })
 
 // User Schema
 const StudySetSchema = mongoose.Schema({
+	id: {
+		type: String,
+		required: true
+	},
 	title: {
 		type: String,
 		required: true
@@ -24,6 +33,7 @@ const StudySetSchema = mongoose.Schema({
 	cards: [CardSchema],
 	userId: {
 		type: mongoose.Schema.Types.ObjectId, ref: 'User',
+		// type: String,
 		required: true
 	},
 	password: {
@@ -43,13 +53,15 @@ const StudySetSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	subject: {
-		type: String
-	},
+	// subject: {
+	// 	type: String
+	// },
 	image_url: {
 		type: String,
 		default: "https://farm4.staticflickr.com/3019/2580344111_c467711ec3.jpg"
 	}
+
+
 });
 
 
@@ -87,6 +99,11 @@ module.exports.addStudySet = function(newStudySet){
 
 module.exports.deleteStudySet = function(studySetId){
 	return StudySet.findByIdAndRemove(studySetId)
+}
+
+//Trying to get a study set by it's unique id
+module.exports.findStudySet = function(studySetId){
+	return StudySet.find({id:studySetId})
 }
 
 module.exports.updateStudySetTitle = function(studySetId, title){
