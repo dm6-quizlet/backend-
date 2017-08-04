@@ -102,7 +102,17 @@ router.put('/update', (req, res, next) => {
 	const studySetId = req.body.id
 	const update = req.body
 	StudySet.updateStudySet(studySetId, update)
+	.then(studyset => {
+		if (!studyset) {
+			res.json({msg: "Study set not found"})
+		} else {
+			res.json({msg: "Study set updated", studyset: studyset})
+		}
+	})
+	.catch(err => {
 
+	})
+})
 router.get('/all/:searchTerm', (req, res, next) => {
 	StudySet.find({$text: {$search : req.params.searchTerm}})
 	.then(studyset => {
