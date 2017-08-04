@@ -11,7 +11,7 @@ mongoose.connect(config.database, {useMongoClient: true});
 mongoose.Promise = require('bluebird');
 
 mongoose.connection.on('connected', () => {
-	console.log('Connected to database '+config.database)
+	console.log('Connected to database '+ config.database)
 });
 
 mongoose.connection.on('error', (err) => {

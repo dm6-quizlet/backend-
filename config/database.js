@@ -1,4 +1,4 @@
 module.exports = {
-	database: 'mongodb://localhost:27017/quizlet-db',
+	database: 'mongodb://dadleatherwood:hey@ds129153.mlab.com:29153/quizlet-db',
 	secret: 'yoursecret'
 }
