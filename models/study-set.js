@@ -55,17 +55,6 @@ const StudySetSchema = mongoose.Schema({
 
 const StudySet = module.exports = mongoose.model('StudySet', StudySetSchema);
 
-
-// deprecated code from old project
-// module.exports.getCharacterById = function(id){
-// 	User.findById(id);
-// }
-
-// module.exports.getCharacterByCharacterName = function(name){
-// 	const query = {name: name}
-// 	User.findOne(query);
-// }
-
 module.exports.getAllStudySets = function (req, res, next) {
 		return StudySet.aggregate([{$sample: {size: 8}}])
 		.then(results => {
