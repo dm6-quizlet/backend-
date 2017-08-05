@@ -51,7 +51,7 @@ const StudySetSchema = mongoose.Schema({
 	created: { type: Date, default: Date.now },
 	description: {
 		type: String,
-		required: true
+		// required: true
 	},
 	// subject: {
 	// 	type: String
