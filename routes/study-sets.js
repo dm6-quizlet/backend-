@@ -78,7 +78,7 @@ router.get('/:userId', (req, res, next) => {
 router.get('/studySetId/:studySetId', (req, res, next) => {
 	console.log("At correct endpoint")
 	const studySetId = req.params.studySetId;
-	StudySet.findStudySet(studySetId)
+	StudySet.getStudySetById(studySetId)
 		.then(studyset => {
 			if (!studyset) {
 				return res.json({
@@ -86,6 +86,7 @@ router.get('/studySetId/:studySetId', (req, res, next) => {
 					msg: 'Study set not found'
 				})
 			} else {
+				console.log(studyset)
 				res.json({
 					success: true,
 					msg: 'Study set Found',
