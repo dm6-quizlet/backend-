@@ -26,7 +26,7 @@ const folders = require('./routes/folders')
 app.use(cors());
 
 //set static folder
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '/build')))
 
 //body parser middleware
 app.use(bodyParser.json());
