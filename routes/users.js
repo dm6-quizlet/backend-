@@ -2,7 +2,6 @@ const express = require('express')
 ,	router = express.Router()
 ,	passport = require('passport')
 ,	jwt = require('jsonwebtoken')
-,	config = require('../config/database')
 ,	User = require('../models/user');
 
 router.post('/register', (req, res, next) => {
@@ -17,7 +16,7 @@ router.post('/register', (req, res, next) => {
 		if (err) {
 			res.json({success: false, msg:'Failed to register user'})
 		} else {
-			const token = jwt.sign(user, config.secret, {
+			const token = jwt.sign(user, process.env.SECRET, {
 				expiresIn: 604800 // 1 week
 			});
 			res.json({
@@ -52,7 +51,7 @@ router.post('/authenticate', (req, res, next) => {
 			User.comparePassword(password, user.password, (err, isMatch) =>{
 				if(err) next(err);
 				if(isMatch){
-					const token = jwt.sign(user, config.secret, {
+					const token = jwt.sign(user, process.env.SECRET, {
 						expiresIn: 604800 // 1 week
 					});
 					res.json({

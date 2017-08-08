@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-, config = require('../config/database');
 
 const CardSchema = mongoose.Schema({
 		term: {

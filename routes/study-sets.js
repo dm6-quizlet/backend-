@@ -1,7 +1,6 @@
 const express = require('express'),
 	router = express.Router(),
 	passport = require('passport'),
-	config = require('../config/database'),
 	StudySet = require('../models/study-set');
 
 
